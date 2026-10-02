@@ -7,7 +7,7 @@ export const site = {
   name: "Robin Hmaidan",
   role: "Full-Stack Developer",
   pitch:
-    "I build and ship production software for paying clients, end to end: database design, APIs, UI, payments, testing and deployment, with a security-minded approach.",
+    "I build production SaaS end to end: Postgres schema, auth and permissions, payments, testing, deployment and monitoring, with security designed in from day one.",
   location: "Lebanon · Open to remote or relocation",
 
   email: "robinhmiadan01@gmail.com",

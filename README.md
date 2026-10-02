@@ -22,7 +22,7 @@ npm run lint
 
 ## Where to edit content
 
-Every fact on the site comes from the CV (`public/CV-Robin-Hmaidan.pdf`), except the public esthéJob figure "200+ registered freelancers" (shown on the esthejob.fr home page). Update the CV first, then the site.
+Every fact on the site comes from the CV (`public/CV-Robin-Hmaidan.pdf`). Update the CV first, then the site.
 
 | What | File |
 | --- | --- |
