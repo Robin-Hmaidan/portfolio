@@ -7,7 +7,7 @@ It is a fully static Next.js site (App Router, TypeScript, Tailwind CSS v4). No 
 ## Pages
 
 - `/`: hero, selected work, security, experience, skills, contact
-- `/work/[slug]`: case studies (`esthejob`, `esthejob-cowork`, `multi-store-pos`, `warai`, `automatedpos`, `toy-store-ecommerce`)
+- `/work/[slug]`: case studies (`esthejob`, `esthejob-cowork`, `multi-store-pos`, `warai`, `automatedpos`, `dakdouk-ecommerce`)
 - Generated: `/opengraph-image`, `/work/[slug]/opengraph-image`, `/icon.svg`, `/apple-icon`, `/sitemap.xml`, `/robots.txt`
 
 ## Run locally

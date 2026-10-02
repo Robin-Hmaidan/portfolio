@@ -13,13 +13,8 @@ export const site = {
   email: "robinhmiadan01@gmail.com",
   github: "https://github.com/Robin-Hmaidan",
 
-  /**
-   * LINKEDIN URL — EMPTY ON PURPOSE.
-   * Paste the full profile URL here (e.g. "https://www.linkedin.com/in/...")
-   * once the profile exists. While this is an empty string, no LinkedIn link
-   * is rendered anywhere on the site.
-   */
-  linkedin: "" as string,
+  /** LinkedIn profile URL. Set to "" to hide the LinkedIn link everywhere. */
+  linkedin: "https://www.linkedin.com/in/robin-hmaidan-09a9a0230" as string,
 
   cvPath: "/CV-Robin-Hmaidan.pdf",
 

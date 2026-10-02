@@ -131,16 +131,17 @@ export const experience: ExperienceItem[] = [
     caseStudy: "/work/multi-store-pos",
   },
   {
-    title: "Freelance Frontend Developer",
-    org: "E-Commerce Platform · Toy Store",
+    title: "Freelance Full-Stack Developer",
+    org: "Dakdouk Global Gate · Retail E-Commerce",
     orgHref: "https://github.com/Robin-Hmaidan/dakdouk-ecommerce",
     period: "Jan 2024 – Dec 2024",
     location: "Remote",
     points: [
-      "Built a client-facing e-commerce site with product listings, shopping cart and an integrated delivery system",
-      "Developed responsive React interfaces connected to REST APIs for order and delivery management",
+      "Built a live e-commerce platform for a Lebanese retailer with several branches and product categories: storefront, cart, checkout with payment and delivery, order history and customer messaging",
+      "Built the admin dashboard for products, stock, orders, users and stores, backed by a Node.js/Express REST API with JWT authentication",
     ],
-    caseStudy: "/work/toy-store-ecommerce",
+    stack: "React · Node.js · Express · MongoDB · JWT",
+    caseStudy: "/work/dakdouk-ecommerce",
   },
   {
     title: "Computer Science Lab Assistant",
