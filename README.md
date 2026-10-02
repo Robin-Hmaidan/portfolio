@@ -41,8 +41,8 @@ Every fact on the site comes from the CV (`public/CV-Robin-Hmaidan.pdf`). Update
 
 - Hero and case-study headers use pure CSS entrance animations (`enter`, `enter-word` in `app/globals.css`), so they never depend on JavaScript.
 - Scroll reveals: add `data-reveal` to an element (stagger siblings with `style={stagger(i)}`). `components/motion/reveal-observer.tsx` reveals them once in view. They are only hidden while JS is running (an inline script in `app/layout.tsx` sets `data-js` and removes it after 3 s if the observer never starts).
-- `components/motion/scroll-fx.tsx` (scroll-linked scale/parallax, motion `scroll()`), `count-up.tsx` (hero numbers) and `header-shell.tsx` (blurred header, active nav link) are the only client components.
-- Everything respects `prefers-reduced-motion`: no reveals, no parallax, no count-up, and the tech marquee becomes a static list.
+- `components/motion/scroll-fx.tsx` (scroll-linked scale/parallax, motion `scroll()`) and `header-shell.tsx` (blurred header, active nav link) are the only client components.
+- Everything respects `prefers-reduced-motion`: no reveals, no parallax, and the tech marquee becomes a static list.
 
 ## Notes
 

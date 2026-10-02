@@ -3,14 +3,6 @@
  * Source of truth: the CV. Do not add facts that are not on the CV.
  */
 
-/** Hero numbers: impact and scope, not activity counts. */
-export const stats = [
-  { value: "0 → 1", label: "took esthéJob from prototype to a live product" },
-  { value: "2", label: "live SaaS platforms in production" },
-  { value: "5", label: "business sites ran daily on my POS system" },
-  { value: "120+", label: "automated end-to-end tests guarding production" },
-] as const;
-
 export type SecurityItem = {
   tag: string;
   title: string;

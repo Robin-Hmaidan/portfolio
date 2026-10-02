@@ -1,8 +1,9 @@
 import Link from "next/link";
 
+import { BrowserFrame, PhoneFrame } from "@/components/frames";
 import { ArrowRightIcon, DownloadIcon, ExternalIcon } from "@/components/icons";
 import { Marquee } from "@/components/marquee";
-import { CountUp } from "@/components/motion/count-up";
+import { ScrollFx } from "@/components/motion/scroll-fx";
 import {
   AuditProject,
   FeaturedProject,
@@ -11,9 +12,24 @@ import {
   TextProject,
 } from "@/components/project-card";
 import { ButtonAnchor, SectionTitle, delay, stagger } from "@/components/ui";
-import { education, experience, pentestFindings, security, skills, stats } from "@/lib/content";
-import { projects } from "@/lib/projects";
+import { education, experience, pentestFindings, security, skills } from "@/lib/content";
+import { projects, type Shot } from "@/lib/projects";
 import { site } from "@/lib/site";
+import directoryDesktop from "@/public/screens/esthejob-directory-desktop.png";
+import directoryMobile from "@/public/screens/esthejob-directory-mobile.png";
+
+/** Hero visual: esthéJob's public directory (business names blurred) */
+const heroDesktop: Shot = {
+  src: directoryDesktop,
+  alt: "esthéJob public directory on desktop: 224 beauty and wellness venues across France, listed beside a live map with location clusters",
+  device: "desktop",
+  url: "esthejob.fr",
+};
+const heroMobile: Shot = {
+  src: directoryMobile,
+  alt: "esthéJob public directory on a phone",
+  device: "mobile",
+};
 
 /** Tech shown in the marquee: all of it is listed in the skills below (and on the CV) */
 const marqueeStack = [
@@ -322,9 +338,9 @@ function Hero() {
   const words = site.name.split(" ");
   return (
     <section aria-labelledby="hero-title">
-      <div className="container-page pt-8 pb-16 sm:pt-16 sm:pb-24 lg:pt-20 lg:pb-24">
-        <div className="grid gap-14 lg:grid-cols-12 lg:items-end lg:gap-10">
-          <div className="lg:col-span-8">
+      <div className="container-page pt-8 pb-16 sm:pt-16 sm:pb-24 lg:pt-20 lg:pb-28">
+        <div className="grid lg:grid-cols-12">
+          <div className="lg:col-span-10">
             <p className="enter text-sm font-medium text-muted sm:text-base" style={delay(0)}>
               Founding full-stack developer at{" "}
               <a
@@ -387,18 +403,32 @@ function Hero() {
               </span>
             </div>
           </div>
-
-          <dl className="grid grid-cols-2 gap-x-6 gap-y-9 lg:col-span-4 lg:grid-cols-1 lg:gap-y-7 lg:pl-10">
-            {stats.map((s, i) => (
-              <div key={s.label} data-count-host="" className="enter flex flex-col" style={delay(680 + i * 90)}>
-                <dt className="mt-1 text-sm leading-snug text-muted">{s.label}</dt>
-                <dd className="order-first text-4xl font-bold tracking-[-0.04em] text-ink sm:text-5xl">
-                  <CountUp value={s.value} />
-                </dd>
-              </div>
-            ))}
-          </dl>
         </div>
+
+        {/* Real work first: the live product, not numbers */}
+        <figure className="enter relative mt-14 sm:mt-20" style={delay(680)}>
+          <ScrollFx scale={[1, 0.95]} offset={["start 0.65", "end start"]} className="origin-top">
+            <BrowserFrame shot={heroDesktop} preload sizes="(min-width: 1152px) 1088px, 100vw" />
+          </ScrollFx>
+          <ScrollFx y={[0, -70]} className="absolute right-4 -bottom-12 hidden w-[17%] lg:block xl:-right-8">
+            <PhoneFrame shot={heroMobile} sizes="200px" />
+          </ScrollFx>
+          <figcaption className="mt-6 max-w-2xl text-sm leading-relaxed text-muted sm:text-base lg:pr-[20%]">
+            Live at{" "}
+            <a
+              href="https://esthejob.fr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-underline font-semibold text-ink"
+            >
+              esthejob.fr
+            </a>
+            : the marketplace I took from prototype to production as lead developer.{" "}
+            <Link href="/work/esthejob" className="link-underline font-semibold text-ink">
+              Read the case study
+            </Link>
+          </figcaption>
+        </figure>
       </div>
     </section>
   );
