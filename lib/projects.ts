@@ -65,10 +65,11 @@ export const projects: Project[] = [
     status: "Live",
     size: "featured",
     summary:
-      "Lead developer of a live marketplace connecting beauty and hairdressing salons with freelance professionals. Built from prototype to production: 79 pages, 145 database migrations.",
+      "Lead developer of a live marketplace connecting beauty and hairdressing salons with freelance professionals, with 200+ registered freelancers. Built from prototype to production: 79 pages, 145 database migrations.",
     context: [
       "esthéJob (esthejob.fr) is a live B2B marketplace that connects beauty and hairdressing salons with freelance professionals for replacements and cabin rental, in France.",
       "The product had to go from prototype to production, serving several user roles with payments, messaging and hiring workflows.",
+      "The platform has 200+ registered freelancers (beauty and hairdressing), a figure shown publicly on the esthejob.fr home page.",
     ],
     myRole: [
       "Founding full-stack developer and lead developer, working remotely (France).",

@@ -4,16 +4,10 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { BrowserFrame, PhoneFrame } from "@/components/frames";
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  ExternalIcon,
-  GitHubIcon,
-  LockIcon,
-  MailIcon,
-} from "@/components/icons";
-import { FlowDiagram } from "@/components/project-card";
-import { ButtonAnchor, StatusBadge } from "@/components/ui";
+import { ArrowLeftIcon, ArrowRightIcon, ExternalIcon, GitHubIcon, LockIcon, MailIcon } from "@/components/icons";
+import { ScrollFx } from "@/components/motion/scroll-fx";
+import { FlowSteps } from "@/components/project-card";
+import { ButtonAnchor, ProjectMeta, delay, stagger } from "@/components/ui";
 import { getProject, projects, type Project } from "@/lib/projects";
 import { site } from "@/lib/site";
 
@@ -61,48 +55,57 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
   return (
     <article>
       {/* Header */}
-      <header className="relative overflow-hidden border-b border-line">
-        <div
-          aria-hidden="true"
-          className="bg-grid pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent_90%)]"
-        />
-        <div className="container-page relative pt-10 pb-14 sm:pt-14 sm:pb-16">
-          <Link
-            href="/#work"
-            className="inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-muted hover:text-ink"
-          >
-            <ArrowLeftIcon width={16} height={16} /> All work
-          </Link>
-          <div className="mt-8 flex flex-wrap items-center gap-2">
-            {project.status ? <StatusBadge>{project.status}</StatusBadge> : null}
-            <span className="font-mono text-xs text-muted">{project.period}</span>
-          </div>
-          <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">{project.name}</h1>
-          <p className="mt-2 font-mono text-sm font-medium tracking-wide text-accent-strong uppercase">
-            {project.label}
-          </p>
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-text">{project.tagline}.</p>
-          <ProjectLinks project={project} />
-        </div>
+      <header className="container-page pt-10 pb-14 sm:pt-14 sm:pb-20">
+        <Link
+          href="/#work"
+          className="enter group inline-flex items-center gap-2 text-sm font-medium text-muted hover:text-ink"
+        >
+          <ArrowLeftIcon
+            width={16}
+            height={16}
+            className="transition-transform duration-300 ease-expo group-hover:-translate-x-1"
+          />
+          <span className="link-underline">All work</span>
+        </Link>
+        <ProjectMeta status={project.status} period={project.period} className="enter mt-10 sm:mt-14" />
+        <h1 className="mt-4 text-[clamp(2.75rem,8vw,5.5rem)] leading-[0.95] font-extrabold tracking-[-0.045em] text-ink">
+          <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
+            <span className="enter-word" style={delay(80)}>
+              {project.name}
+            </span>
+          </span>
+        </h1>
+        <p className="enter mt-3 text-lg font-medium text-accent-strong sm:text-xl" style={delay(220)}>
+          {project.label}
+        </p>
+        <p
+          className="enter mt-6 max-w-3xl text-[1.3rem] leading-snug tracking-[-0.01em] text-muted sm:text-[1.6rem]"
+          style={delay(320)}
+        >
+          {project.tagline}.
+        </p>
+        <ProjectLinks project={project} />
       </header>
 
       {/* Visuals */}
       {heroShot ? (
-        <div className="border-b border-line bg-slate-50/70">
-          <div className="container-page py-12 sm:py-16">
-            <div className={`grid items-end gap-8 ${mobile.length ? "lg:grid-cols-[1fr_auto]" : ""}`}>
-              <figure>
-                <BrowserFrame shot={heroShot} preload sizes="(min-width: 1024px) 860px, 100vw" />
+        <div className="overflow-hidden bg-slate-50">
+          <div className="container-page py-12 sm:py-20">
+            <div className={`grid items-end gap-10 ${mobile.length ? "lg:grid-cols-[1fr_auto]" : ""}`}>
+              <figure className="enter" style={delay(450)}>
+                <ScrollFx scale={[1, 0.95]} offset={["start 0.4", "end start"]} className="origin-top">
+                  <BrowserFrame shot={heroShot} preload sizes="(min-width: 1024px) 860px, 100vw" />
+                </ScrollFx>
                 {heroShot.caption ? (
-                  <figcaption className="mt-3 text-center font-mono text-xs text-muted">{heroShot.caption}</figcaption>
+                  <figcaption className="mt-4 text-center text-sm text-muted">{heroShot.caption}</figcaption>
                 ) : null}
               </figure>
-              {mobile.map((m) => (
-                <figure key={m.alt} className="mx-auto w-52 sm:w-60">
-                  <PhoneFrame shot={m} />
-                  {m.caption ? (
-                    <figcaption className="mt-3 text-center font-mono text-xs text-muted">{m.caption}</figcaption>
-                  ) : null}
+              {mobile.map((m, i) => (
+                <figure key={m.alt} className="enter mx-auto w-52 sm:w-60" style={delay(600 + i * 120)}>
+                  <ScrollFx y={[0, -60]} offset={["start 0.6", "end start"]}>
+                    <PhoneFrame shot={m} />
+                  </ScrollFx>
+                  {m.caption ? <figcaption className="mt-4 text-center text-sm text-muted">{m.caption}</figcaption> : null}
                 </figure>
               ))}
             </div>
@@ -111,40 +114,40 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
       ) : null}
 
       {/* Body */}
-      <div className="container-page grid gap-12 py-14 sm:py-20 lg:grid-cols-12">
-        <div className="space-y-12 lg:col-span-8">
-          <Block title="Context" index="01">
+      <div className="container-page grid gap-16 py-16 sm:py-24 lg:grid-cols-12 lg:gap-12">
+        <div className="space-y-16 lg:col-span-8">
+          <Block title="Context" id="context">
             {project.context.map((p) => (
               <p key={p}>{p}</p>
             ))}
           </Block>
 
-          <Block title="My role" index="02">
+          <Block title="My role" id="role">
             <List items={project.myRole} />
           </Block>
 
-          <Block title={project.slug === "esthejob-cowork" ? "What I did" : "What I built"} index="03">
+          <Block title={project.slug === "esthejob-cowork" ? "What I did" : "What I built"} id="built">
             <List items={project.built} />
           </Block>
 
-          <Block title="Engineering highlights" index="04">
+          <Block title="Engineering highlights" id="highlights">
             <List items={project.highlights} accent />
           </Block>
 
           {project.flow ? (
-            <div className="max-w-xl">
-              <FlowDiagram flow={project.flow} />
+            <div data-reveal="" className="max-w-xl rounded-3xl bg-slate-50 p-7 sm:p-10">
+              <FlowSteps flow={project.flow} variant="list" />
             </div>
           ) : null}
 
           {moreDesktop.length ? (
-            <div className="space-y-8">
+            <div className="space-y-12">
               {moreDesktop.map((s) => (
-                <figure key={s.alt}>
-                  <BrowserFrame shot={s} sizes="(min-width: 1024px) 760px, 100vw" />
-                  {s.caption ? (
-                    <figcaption className="mt-3 text-center font-mono text-xs text-muted">{s.caption}</figcaption>
-                  ) : null}
+                <figure key={s.alt} data-reveal="">
+                  <ScrollFx scale={[0.94, 1]} offset={["start end", "start 0.45"]} className="origin-top">
+                    <BrowserFrame shot={s} sizes="(min-width: 1024px) 760px, 100vw" />
+                  </ScrollFx>
+                  {s.caption ? <figcaption className="mt-4 text-center text-sm text-muted">{s.caption}</figcaption> : null}
                 </figure>
               ))}
             </div>
@@ -153,92 +156,82 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
 
         {/* Sidebar */}
         <aside className="lg:col-span-4" aria-label="Project facts">
-          <div className="space-y-6 lg:sticky lg:top-28">
-            <dl className="space-y-5 rounded-2xl border border-line bg-white p-6 text-sm">
-              <div>
-                <dt className="font-mono text-xs text-muted uppercase">Role</dt>
-                <dd className="mt-1 font-semibold text-ink">{project.role}</dd>
-              </div>
-              <div>
-                <dt className="font-mono text-xs text-muted uppercase">Period</dt>
-                <dd className="mt-1 font-semibold text-ink">{project.period}</dd>
-              </div>
-              <div>
-                <dt className="font-mono text-xs text-muted uppercase">Stack</dt>
-                <dd className="mt-2">
-                  <ul className="flex flex-wrap gap-1.5">
-                    {project.stack.map((s) => (
-                      <li
-                        key={s}
-                        className="rounded-md bg-slate-100 px-2 py-1 font-mono text-[0.72rem] leading-none text-slate-700"
-                      >
-                        {s}
+          <div data-reveal="" style={stagger(1)} className="space-y-10 lg:sticky lg:top-28">
+            <dl className="space-y-7">
+              <Fact label="Role">
+                <span className="font-semibold text-ink">{project.role}</span>
+              </Fact>
+              <Fact label="Period">
+                <span className="font-semibold text-ink">{project.period}</span>
+              </Fact>
+              <Fact label="Stack">
+                <span className="leading-relaxed text-text">{project.stack.join(", ")}</span>
+              </Fact>
+              {project.links.length ? (
+                <Fact label="Links">
+                  <ul className="space-y-1.5">
+                    {project.links.map((l) => (
+                      <li key={l.href}>
+                        <a
+                          href={l.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 font-semibold text-accent-strong"
+                        >
+                          {l.kind === "github" ? (
+                            <GitHubIcon width={15} height={15} />
+                          ) : (
+                            <ExternalIcon width={15} height={15} />
+                          )}
+                          <span className="link-underline">{l.label}</span>
+                        </a>
                       </li>
                     ))}
                   </ul>
-                </dd>
-              </div>
-              {project.links.length ? (
-                <div>
-                  <dt className="font-mono text-xs text-muted uppercase">Links</dt>
-                  <dd className="mt-2">
-                    <ul className="space-y-1.5">
-                      {project.links.map((l) => (
-                        <li key={l.href}>
-                          <a
-                            href={l.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 font-medium text-accent-strong underline decoration-teal-300 underline-offset-4 hover:decoration-accent"
-                          >
-                            {l.kind === "github" ? <GitHubIcon width={15} height={15} /> : <ExternalIcon width={15} height={15} />}
-                            {l.label}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </dd>
-                </div>
+                </Fact>
               ) : null}
             </dl>
 
             {project.sourceNote ? (
-              <div className="flex gap-3 rounded-2xl border border-line bg-slate-50 p-5 text-sm leading-relaxed">
-                <LockIcon width={18} height={18} className="mt-0.5 shrink-0 text-muted" />
-                <p>{project.sourceNote}</p>
-              </div>
+              <p className="flex gap-3 text-sm leading-relaxed text-muted">
+                <LockIcon width={16} height={16} className="mt-0.5 shrink-0" />
+                <span>{project.sourceNote}</span>
+              </p>
             ) : null}
 
             <a
               href={`mailto:${site.email}?subject=${encodeURIComponent(`About ${project.name}`)}`}
-              className="flex items-center justify-between gap-3 rounded-2xl bg-ink p-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
+              className="group flex items-center justify-between gap-3 rounded-full bg-ink py-4 pr-5 pl-6 text-sm font-semibold text-white transition-[background-color,translate] duration-300 ease-expo hover:-translate-y-0.5 hover:bg-slate-800"
             >
               <span className="flex items-center gap-2.5">
                 <MailIcon width={18} height={18} /> Ask me about this project
               </span>
-              <ArrowRightIcon width={16} height={16} />
+              <ArrowRightIcon
+                width={16}
+                height={16}
+                className="transition-transform duration-300 ease-expo group-hover:translate-x-1"
+              />
             </a>
           </div>
         </aside>
       </div>
 
       {/* Next project */}
-      <nav aria-label="More work" className="border-t border-line">
-        <div className="container-page py-10">
-          <Link
-            href={`/work/${next.slug}`}
-            className="group flex flex-col gap-1 rounded-2xl border border-line p-6 transition-shadow hover:shadow-lg hover:shadow-slate-900/5 sm:flex-row sm:items-center sm:justify-between"
-          >
-            <span>
-              <span className="font-mono text-xs text-muted uppercase">Next case study</span>
-              <span className="mt-1 block text-xl font-bold text-ink">{next.name}</span>
-              <span className="mt-0.5 block text-sm text-text">{next.tagline}</span>
+      <nav aria-label="More work" className="bg-slate-50">
+        <div className="container-page py-16 sm:py-24">
+          <Link href={`/work/${next.slug}`} data-reveal="" className="group block">
+            <span className="text-sm font-semibold tracking-wide text-muted uppercase">Next case study</span>
+            <span className="mt-3 flex items-center gap-4 sm:gap-6">
+              <span className="text-[clamp(2.25rem,6vw,4.5rem)] leading-none font-extrabold tracking-[-0.04em] text-ink transition-colors duration-300 group-hover:text-accent-strong">
+                {next.name}
+              </span>
+              <ArrowRightIcon
+                width={40}
+                height={40}
+                className="shrink-0 text-ink transition-transform duration-500 ease-expo group-hover:translate-x-3 max-sm:size-7"
+              />
             </span>
-            <ArrowRightIcon
-              width={22}
-              height={22}
-              className="mt-3 text-ink transition-transform group-hover:translate-x-1 sm:mt-0"
-            />
+            <span className="mt-3 block max-w-2xl text-text">{next.tagline}</span>
           </Link>
         </div>
       </nav>
@@ -249,7 +242,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
 function ProjectLinks({ project }: { project: Project }) {
   if (!project.links.length) return null;
   return (
-    <div className="mt-8 flex flex-wrap gap-3">
+    <div className="enter mt-10 flex flex-wrap gap-3" style={delay(420)}>
       {project.links.map((l, i) => (
         <ButtonAnchor key={l.href} href={l.href} external variant={i === 0 ? "primary" : "secondary"}>
           {l.kind === "github" ? <GitHubIcon /> : <ExternalIcon />}
@@ -260,28 +253,34 @@ function ProjectLinks({ project }: { project: Project }) {
   );
 }
 
-function Block({ title, index, children }: { title: string; index: string; children: ReactNode }) {
+function Fact({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <section aria-labelledby={`h-${index}`}>
-      <h2 id={`h-${index}`} className="flex items-baseline gap-3 text-2xl font-bold tracking-tight text-ink">
-        <span aria-hidden="true" className="font-mono text-sm font-medium text-accent-strong">
-          {index}
-        </span>
+    <div>
+      <dt className="text-xs font-semibold tracking-wide text-muted uppercase">{label}</dt>
+      <dd className="mt-1.5">{children}</dd>
+    </div>
+  );
+}
+
+function Block({ title, id, children }: { title: string; id: string; children: ReactNode }) {
+  return (
+    <section aria-labelledby={`h-${id}`} data-reveal="">
+      <h2 id={`h-${id}`} className="text-3xl font-bold tracking-[-0.03em] text-ink sm:text-4xl">
         {title}
       </h2>
-      <div className="mt-4 space-y-4 leading-relaxed text-text">{children}</div>
+      <div className="mt-5 space-y-4 text-[1.05rem] leading-relaxed text-text">{children}</div>
     </section>
   );
 }
 
 function List({ items, accent = false }: { items: string[]; accent?: boolean }) {
   return (
-    <ul className="space-y-2.5">
+    <ul className="space-y-3">
       {items.map((it) => (
-        <li key={it} className="flex gap-3">
+        <li key={it} className="flex gap-3.5">
           <span
             aria-hidden="true"
-            className={`mt-[0.6rem] size-1.5 shrink-0 rounded-full ${accent ? "bg-accent" : "bg-slate-400"}`}
+            className={`mt-[0.8rem] h-px w-3.5 shrink-0 ${accent ? "bg-accent" : "bg-slate-400"}`}
           />
           <span>{it}</span>
         </li>

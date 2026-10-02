@@ -12,6 +12,9 @@
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, "Segoe UI", Arial, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, Consolas, monospace;
+
+  /* Long, soft deceleration used by every entrance and reveal */
+  --ease-expo: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @layer base {
@@ -28,8 +31,10 @@
     *::before,
     *::after {
       animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      transition-delay: 0ms !important;
     }
   }
 
@@ -60,23 +65,150 @@
   }
 }
 
-/* Subtle dotted grid used behind the hero */
-@utility bg-grid {
-  background-image: radial-gradient(circle at 1px 1px, rgb(15 23 42 / 0.07) 1px, transparent 0);
-  background-size: 22px 22px;
+/* Large editorial display type (hero name, contact) */
+@utility text-display {
+  font-size: clamp(3.25rem, 11vw, 7.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
 }
 
-@keyframes blink {
-  0%,
-  49% {
-    opacity: 1;
+/* Section titles */
+@utility text-title {
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+/*
+ * Animated underline for text links: grows from the left on hover / when active.
+ * Uses a background image so it also works on links that wrap onto two lines.
+ */
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 0.45s var(--ease-expo), color 0.2s;
+  &:hover,
+  &:focus-visible,
+  &[data-active] {
+    background-size: 100% 1px;
   }
-  50%,
-  100% {
+}
+
+/* Same, but always visible and thickening on hover (big email link) */
+@utility link-underline-strong {
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 2px;
+  transition: background-size 0.45s var(--ease-expo), color 0.2s;
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 0.5em;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion                                                              */
+/* ------------------------------------------------------------------ */
+
+@keyframes rise {
+  from {
     opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
-@utility caret {
-  animation: blink 1.1s steps(1) infinite;
+@keyframes mask-up {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/*
+ * Page entrance (hero, case-study header). Pure CSS: it runs as soon as the HTML
+ * is painted, so it never depends on JavaScript. Stagger with --delay.
+ */
+@utility enter {
+  animation: rise 0.9s var(--ease-expo) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* Word reveal: the inner span slides up inside an overflow-hidden mask */
+@utility enter-word {
+  display: inline-block;
+  animation: mask-up 1.05s var(--ease-expo) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+/*
+ * Scroll reveal. Elements with [data-reveal] are only hidden when:
+ *  - the inline script in <head> has set [data-js] on <html> (JS is running), and
+ *  - the user has not asked for reduced motion.
+ * The script removes [data-js] after 3 s if the reveal observer never started,
+ * so content can never stay hidden. Stagger siblings with --i.
+ */
+@media screen and (prefers-reduced-motion: no-preference) {
+  [data-js] [data-reveal] {
+    transition:
+      opacity 0.9s var(--ease-expo),
+      transform 0.9s var(--ease-expo);
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
+  [data-js] [data-reveal]:not([data-shown]) {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
+/* Infinite tech-stack marquee: pauses on hover, static list for reduced motion */
+.marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 70s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    mask-image: none;
+  }
+  .marquee-track {
+    width: auto;
+    flex-wrap: wrap;
+    animation: none;
+  }
+  .marquee-track > * {
+    flex-wrap: wrap;
+    flex-shrink: 1;
+  }
+  .marquee-track > :nth-child(2) {
+    display: none;
+  }
+}
+
+/* Scroll-linked transforms (motion) are switched off for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-fx {
+    transform: none !important;
+  }
 }

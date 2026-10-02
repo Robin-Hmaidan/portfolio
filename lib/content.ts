@@ -3,11 +3,15 @@
  * Source of truth: the CV. Do not add facts that are not on the CV.
  */
 
+/**
+ * Hero numbers. "200+ registered freelancers" is the public figure shown on the
+ * esthejob.fr home page ("+200 indépendants inscrits (esthétique et coiffure)").
+ */
 export const stats = [
+  { value: "200+", label: "registered freelancers on esthéJob" },
   { value: "1,500+", label: "commits shipped in 5 months" },
-  { value: "2 live", label: "production products" },
+  { value: "2", label: "live production products" },
   { value: "120+", label: "end-to-end test scenarios" },
-  { value: "145", label: "PostgreSQL migrations" },
 ] as const;
 
 export type SecurityItem = {

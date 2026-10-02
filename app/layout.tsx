@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 
+import { RevealObserver } from "@/components/motion/reveal-observer";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { site } from "@/lib/site";
@@ -64,9 +65,19 @@ export const viewport: Viewport = {
   themeColor: "#0f172a",
 };
 
+/**
+ * Runs in <head> before first paint. Marks <html> so the scroll-reveal styles
+ * apply, and removes the mark after 3 s if the reveal observer never started
+ * (slow or broken JavaScript), so content can never stay hidden.
+ */
+const revealBootScript = `(function(){var d=document.documentElement;d.setAttribute("data-js","");setTimeout(function(){if(!window.__revealReady)d.removeAttribute("data-js")},3000)})()`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: revealBootScript }} />
+      </head>
       <body className="flex min-h-dvh flex-col">
         <a
           href="#main"
@@ -79,6 +90,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <SiteFooter />
+        <RevealObserver />
       </body>
     </html>
   );
