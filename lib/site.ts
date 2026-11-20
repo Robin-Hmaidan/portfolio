@@ -8,7 +8,9 @@ export const site = {
   role: "Full-Stack Developer",
   pitch:
     "I take SaaS products from prototype to production: database, auth, payments, tests and deployment, with security built in from day one.",
-  location: "Lebanon, UTC+2 · Available now, remote",
+  location: "Lebanon, UTC+2",
+  /** Shown as the green-dot badge in the hero. Set to "" to hide it. */
+  availability: "Available now, remote" as string,
 
   email: "robinhmiadan01@gmail.com",
   github: "https://github.com/Robin-Hmaidan",

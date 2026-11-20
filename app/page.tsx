@@ -354,6 +354,15 @@ function Hero() {
               <ButtonAnchor href={site.cvPath} download>
                 <DownloadIcon /> Download CV <span className="sr-only">(PDF)</span>
               </ButtonAnchor>
+              {site.availability ? (
+                <p className="inline-flex items-center gap-2.5 rounded-full bg-emerald-50 px-4 py-2 text-sm font-semibold whitespace-nowrap text-emerald-800 ring-1 ring-emerald-600/20">
+                  <span aria-hidden="true" className="relative flex size-2.5">
+                    <span className="absolute inline-flex size-full rounded-full bg-emerald-500 opacity-60 motion-safe:animate-ping" />
+                    <span className="relative inline-flex size-2.5 rounded-full bg-emerald-500" />
+                  </span>
+                  {site.availability}
+                </p>
+              ) : null}
               <span className="flex items-center gap-x-6 sm:gap-x-7">
                 <a href={`mailto:${site.email}`} className="link-underline text-sm font-semibold text-ink">
                   Email me
