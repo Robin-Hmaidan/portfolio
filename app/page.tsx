@@ -80,17 +80,17 @@ export default function Home() {
             )}
           </div>
 
-          <div className="mt-28 grid gap-x-16 gap-y-20 sm:mt-36 lg:grid-cols-12">
-            <div className="space-y-20 lg:col-span-7">
-              {withShots.map((p) => (
-                <ImageProject key={p.slug} project={p} />
-              ))}
-            </div>
-            <div className="space-y-16 lg:col-span-5 lg:pt-28">
-              {textOnly.map((p, i) => (
-                <TextProject key={p.slug} project={p} index={i} />
-              ))}
-            </div>
+          <div className="mt-28 space-y-20 sm:mt-36 sm:space-y-28">
+            {withShots.map((p) => (
+              <ImageProject key={p.slug} project={p} />
+            ))}
+            {textOnly.length ? (
+              <div className="grid gap-x-16 gap-y-16 lg:grid-cols-2">
+                {textOnly.map((p, i) => (
+                  <TextProject key={p.slug} project={p} index={i} />
+                ))}
+              </div>
+            ) : null}
           </div>
 
           {small.length ? (
