@@ -2,7 +2,6 @@ import Link from "next/link";
 
 import { BrowserFrame, PhoneFrame } from "@/components/frames";
 import { ArrowRightIcon, DownloadIcon, ExternalIcon } from "@/components/icons";
-import { Marquee } from "@/components/marquee";
 import { ScrollFx } from "@/components/motion/scroll-fx";
 import {
   AuditProject,
@@ -30,24 +29,6 @@ const heroMobile: Shot = {
   alt: "esthéJob public directory on a phone",
   device: "mobile",
 };
-
-/** Tech shown in the marquee: all of it is listed in the skills below (and on the CV) */
-const marqueeStack = [
-  "Next.js",
-  "TypeScript",
-  "PostgreSQL",
-  "Supabase",
-  "React",
-  "Stripe",
-  "Node.js",
-  "Tailwind CSS",
-  "Playwright",
-  "GitHub Actions",
-  "Sentry",
-  "Vercel",
-  "Claude API",
-  "Kali Linux",
-];
 
 const commaList = (s: string) => s.split(" · ").join(", ");
 
@@ -269,12 +250,7 @@ export default function Home() {
       <section aria-labelledby="skills" className="scroll-mt-20 bg-slate-50 py-24 sm:py-36">
         <div className="container-page">
           <SectionTitle id="skills" title="Tools I work with" />
-        </div>
-        <div className="mt-12 sm:mt-16">
-          <Marquee items={marqueeStack} />
-        </div>
-        <div className="container-page">
-          <dl className="mt-14 grid gap-x-12 gap-y-10 sm:mt-20 sm:grid-cols-2 lg:grid-cols-3">
+          <dl className="mt-12 grid gap-x-12 gap-y-10 sm:mt-20 sm:grid-cols-2 lg:grid-cols-3">
             {skills.map((g, i) => (
               <div key={g.group} data-reveal="" style={stagger(i % 3)}>
                 <dt className="text-sm font-semibold tracking-wide text-ink uppercase">{g.group}</dt>
