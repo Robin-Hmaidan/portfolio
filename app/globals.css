@@ -133,12 +133,6 @@
   }
 }
 
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 /*
  * Page entrance (hero, case-study header). Pure CSS: it runs as soon as the HTML
  * is painted, so it never depends on JavaScript. Stagger with --delay.
@@ -172,37 +166,6 @@
   [data-js] [data-reveal]:not([data-shown]) {
     opacity: 0;
     transform: translateY(28px);
-  }
-}
-
-/* Infinite tech-stack marquee: pauses on hover, static list for reduced motion */
-.marquee {
-  overflow: hidden;
-  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-}
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 70s linear infinite;
-}
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
-}
-@media (prefers-reduced-motion: reduce) {
-  .marquee {
-    mask-image: none;
-  }
-  .marquee-track {
-    width: auto;
-    flex-wrap: wrap;
-    animation: none;
-  }
-  .marquee-track > * {
-    flex-wrap: wrap;
-    flex-shrink: 1;
-  }
-  .marquee-track > :nth-child(2) {
-    display: none;
   }
 }
 

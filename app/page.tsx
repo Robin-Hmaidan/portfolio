@@ -2,7 +2,6 @@ import Link from "next/link";
 
 import { BrowserFrame, PhoneFrame } from "@/components/frames";
 import { ArrowRightIcon, DownloadIcon, ExternalIcon } from "@/components/icons";
-import { Marquee } from "@/components/marquee";
 import { ScrollFx } from "@/components/motion/scroll-fx";
 import {
   AuditProject,
@@ -31,24 +30,6 @@ const heroMobile: Shot = {
   device: "mobile",
 };
 
-/** Tech shown in the marquee: all of it is listed in the skills below (and on the CV) */
-const marqueeStack = [
-  "Next.js",
-  "TypeScript",
-  "PostgreSQL",
-  "Supabase",
-  "React",
-  "Stripe",
-  "Node.js",
-  "Tailwind CSS",
-  "Playwright",
-  "GitHub Actions",
-  "Sentry",
-  "Vercel",
-  "Claude API",
-  "Kali Linux",
-];
-
 const commaList = (s: string) => s.split(" · ").join(", ");
 
 export default function Home() {
@@ -67,7 +48,7 @@ export default function Home() {
           <SectionTitle
             id="work"
             title="Selected work"
-            intro="Two live products in the esthéJob ecosystem, a POS system used daily by a clothing factory, and projects where I push on AI and security."
+            intro="A marketplace I launched in France, a security audit of its sister product, a POS system four stores run on every day, and two projects on AI and security."
           />
 
           <div className="mt-16 space-y-28 sm:mt-20 sm:space-y-36">
@@ -80,17 +61,17 @@ export default function Home() {
             )}
           </div>
 
-          <div className="mt-28 grid gap-x-16 gap-y-20 sm:mt-36 lg:grid-cols-12">
-            <div className="space-y-20 lg:col-span-7">
-              {withShots.map((p) => (
-                <ImageProject key={p.slug} project={p} />
-              ))}
-            </div>
-            <div className="space-y-16 lg:col-span-5 lg:pt-28">
-              {textOnly.map((p, i) => (
-                <TextProject key={p.slug} project={p} index={i} />
-              ))}
-            </div>
+          <div className="mt-28 space-y-20 sm:mt-36 sm:space-y-28">
+            {withShots.map((p) => (
+              <ImageProject key={p.slug} project={p} />
+            ))}
+            {textOnly.length ? (
+              <div className="grid gap-x-16 gap-y-16 lg:grid-cols-2">
+                {textOnly.map((p, i) => (
+                  <TextProject key={p.slug} project={p} index={i} />
+                ))}
+              </div>
+            ) : null}
           </div>
 
           {small.length ? (
@@ -172,7 +153,7 @@ export default function Home() {
           <SectionTitle
             id="experience"
             title="Where I've worked"
-            intro="Product work, freelance client projects, and teaching."
+            intro="Contract and freelance work, most of it remote and most of it as the only developer."
           />
           <ol className="mt-16 space-y-20 sm:mt-24">
             {experience.map((job) => (
@@ -269,12 +250,7 @@ export default function Home() {
       <section aria-labelledby="skills" className="scroll-mt-20 bg-slate-50 py-24 sm:py-36">
         <div className="container-page">
           <SectionTitle id="skills" title="Tools I work with" />
-        </div>
-        <div className="mt-12 sm:mt-16">
-          <Marquee items={marqueeStack} />
-        </div>
-        <div className="container-page">
-          <dl className="mt-14 grid gap-x-12 gap-y-10 sm:mt-20 sm:grid-cols-2 lg:grid-cols-3">
+          <dl className="mt-12 grid gap-x-12 gap-y-10 sm:mt-20 sm:grid-cols-2 lg:grid-cols-3">
             {skills.map((g, i) => (
               <div key={g.group} data-reveal="" style={stagger(i % 3)}>
                 <dt className="text-sm font-semibold tracking-wide text-ink uppercase">{g.group}</dt>
@@ -293,8 +269,8 @@ export default function Home() {
           </h2>
           <div data-reveal="" style={stagger(1)} className="mt-10 grid gap-10 lg:mt-14 lg:grid-cols-12 lg:items-end">
             <p className="max-w-xl text-lg leading-relaxed text-text sm:text-xl lg:col-span-6">
-              I&apos;m looking for full-stack roles in Lebanon, the Gulf, or remote with EU companies. Email is the
-              fastest way to reach me.
+              I&apos;m available now for full-stack roles, remote worldwide or with relocation. Email is the fastest way
+              to reach me.
             </p>
             <div className="lg:col-span-6 lg:text-right">
               <a
@@ -342,7 +318,7 @@ function Hero() {
         <div className="grid lg:grid-cols-12">
           <div className="lg:col-span-10">
             <p className="enter text-sm font-medium text-muted sm:text-base" style={delay(0)}>
-              Founding full-stack developer at{" "}
+              Most recently lead developer of{" "}
               <a
                 href="https://esthejob.fr"
                 target="_blank"
@@ -351,10 +327,10 @@ function Hero() {
               >
                 esthéJob
               </a>
-              <span aria-hidden="true" className="mx-2 text-slate-300">
+              <span aria-hidden="true" className="mx-2 hidden text-slate-300 sm:inline">
                 /
               </span>
-              <span className="whitespace-nowrap">{site.location}</span>
+              <span className="block whitespace-nowrap sm:inline">{site.location}</span>
             </p>
 
             <h1 id="hero-title" className="text-display mt-6 font-extrabold text-ink sm:mt-8">
@@ -378,6 +354,15 @@ function Hero() {
               <ButtonAnchor href={site.cvPath} download>
                 <DownloadIcon /> Download CV <span className="sr-only">(PDF)</span>
               </ButtonAnchor>
+              {site.availability ? (
+                <p className="inline-flex items-center gap-2.5 rounded-full bg-emerald-50 px-4 py-2 text-sm font-semibold whitespace-nowrap text-emerald-800 ring-1 ring-emerald-600/20">
+                  <span aria-hidden="true" className="relative flex size-2.5">
+                    <span className="absolute inline-flex size-full rounded-full bg-emerald-500 opacity-60 motion-safe:animate-ping" />
+                    <span className="relative inline-flex size-2.5 rounded-full bg-emerald-500" />
+                  </span>
+                  {site.availability}
+                </p>
+              ) : null}
               <span className="flex items-center gap-x-6 sm:gap-x-7">
                 <a href={`mailto:${site.email}`} className="link-underline text-sm font-semibold text-ink">
                   Email me
@@ -423,7 +408,7 @@ function Hero() {
             >
               esthejob.fr
             </a>
-            : the marketplace I took from prototype to production as lead developer.{" "}
+            : the marketplace I took from prototype to launch as its sole developer.{" "}
             <Link href="/work/esthejob" className="link-underline font-semibold text-ink">
               Read the case study
             </Link>

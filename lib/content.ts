@@ -74,22 +74,24 @@ export type ExperienceItem = {
 
 export const experience: ExperienceItem[] = [
   {
-    title: "Founding Full-Stack Developer",
+    title: "Lead Full-Stack Developer",
     org: "esthéJob",
     orgHref: "https://esthejob.fr",
-    period: "May 2026 – Present",
+    period: "May 2026 – Oct 2026",
     location: "Remote · France",
     points: [
-      "Lead developer of a live B2B marketplace connecting beauty and hairdressing salons with freelance professionals, built from prototype to production: 79 pages, 145 database migrations",
+      "Sole developer of a live B2B marketplace connecting beauty and hairdressing salons with freelance professionals, taken from prototype to production: nearly 90% of the codebase, 79 pages, 145 database migrations",
+      "Led the September 2026 production launch: domain cutover, live Stripe payments and a rollback runbook",
       "Multi-role dashboards, job board, messaging, application workflows, CV builder with server-side PDF generation, video interviews, maps and Stripe payments",
       "Quality pipeline: 120+ Playwright end-to-end scenarios, GitHub Actions CI, post-deploy smoke tests, Sentry and PostHog monitoring",
       "Merged the job board and the Cowork SaaS onto one shared database with a single login across two domains (Sep 2026)",
+      "Onboarded a second developer with CODEOWNERS, a protected main branch and contribution rules",
     ],
     stack: "Next.js · TypeScript · Supabase · Stripe · Tailwind · Playwright · Vercel",
     sub: {
       title: "esthéJob Cowork · Security & integration lead",
       href: "https://cowork.esthejob.fr",
-      period: "Sep 2026 – Present",
+      period: "Sep 2026 – Oct 2026",
       points: [
         "Backend security audit and report, then fixes: CSP with violation reporting, Cloudflare Turnstile, tighter database privileges, server-only token lifetimes",
         "Fixed race conditions in promo-code reservations and refunds with atomic PostgreSQL functions",

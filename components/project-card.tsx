@@ -193,9 +193,9 @@ export function AuditProject({ project }: { project: Project }) {
 export function ImageProject({ project }: { project: Project }) {
   const shot = project.shots[0];
   return (
-    <article data-reveal="" className="group relative">
+    <article data-reveal="" className="group relative grid gap-x-16 gap-y-7 lg:grid-cols-12 lg:items-center">
       {shot ? (
-        <div className="overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-900/10 transition-[translate,box-shadow] duration-500 ease-expo group-hover:-translate-y-1.5 group-hover:shadow-[0_30px_60px_-30px_rgb(15_23_42/0.35)]">
+        <div className="overflow-hidden rounded-2xl lg:col-span-7 bg-slate-100 ring-1 ring-slate-900/10 transition-[translate,box-shadow] duration-500 ease-expo group-hover:-translate-y-1.5 group-hover:shadow-[0_30px_60px_-30px_rgb(15_23_42/0.35)]">
           <ScrollFx scale={[1.1, 1]} offset={["start end", "end 0.6"]} className="origin-top">
             <Image
               src={shot.src}
@@ -207,15 +207,17 @@ export function ImageProject({ project }: { project: Project }) {
           </ScrollFx>
         </div>
       ) : null}
-      <ProjectMeta status={project.status} period={project.period} className="mt-7" />
-      <h3 className="mt-2 text-3xl font-bold tracking-[-0.03em] text-ink">
-        <Link href={`/work/${project.slug}`} className={stretched}>
-          {project.name}
-        </Link>
-      </h3>
-      <p className="mt-3 max-w-xl leading-relaxed text-text">{project.summary}</p>
-      <StackLine items={project.stack.slice(0, 4)} className="mt-3" />
-      <ReadMore />
+      <div className={shot ? "lg:col-span-5" : "lg:col-span-12"}>
+        <ProjectMeta status={project.status} period={project.period} />
+        <h3 className="mt-2 text-3xl font-bold tracking-[-0.03em] text-ink">
+          <Link href={`/work/${project.slug}`} className={stretched}>
+            {project.name}
+          </Link>
+        </h3>
+        <p className="mt-3 max-w-xl leading-relaxed text-text">{project.summary}</p>
+        <StackLine items={project.stack.slice(0, 4)} className="mt-3" />
+        <ReadMore />
+      </div>
     </article>
   );
 }
