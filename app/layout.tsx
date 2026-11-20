@@ -21,7 +21,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 const description =
-  "Robin Hmaidan, full-stack developer (Next.js, TypeScript, PostgreSQL) and security-minded engineer. Lead developer of esthéJob and security & integration lead on esthéJob Cowork. Based in Lebanon, open to remote or relocation.";
+  "Robin Hmaidan, full-stack developer (Next.js, TypeScript, PostgreSQL) and security-minded engineer. Launched esthéJob, a B2B marketplace in France, as its sole developer. Based in Lebanon (UTC+2), available now for remote roles.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),

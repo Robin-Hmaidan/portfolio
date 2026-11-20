@@ -9,6 +9,6 @@ export default async function Image() {
     eyebrow: "full-stack developer · security-minded",
     title: "Robin Hmaidan",
     subtitle: "Builds and ships production software. Next.js · TypeScript · PostgreSQL · Web security.",
-    footer: "Lebanon · Open to remote or relocation",
+    footer: "Lebanon, UTC+2 · Available now, remote",
   });
 }

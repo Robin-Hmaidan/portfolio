@@ -67,7 +67,7 @@ export default function Home() {
           <SectionTitle
             id="work"
             title="Selected work"
-            intro="Two live products in the esthéJob ecosystem, a POS system used daily by a clothing factory, and projects where I push on AI and security."
+            intro="A marketplace I launched in France, a security audit of its sister product, a POS system four stores run on every day, and two projects on AI and security."
           />
 
           <div className="mt-16 space-y-28 sm:mt-20 sm:space-y-36">
@@ -172,7 +172,7 @@ export default function Home() {
           <SectionTitle
             id="experience"
             title="Where I've worked"
-            intro="Product work, freelance client projects, and teaching."
+            intro="Contract and freelance work, most of it remote and most of it as the only developer."
           />
           <ol className="mt-16 space-y-20 sm:mt-24">
             {experience.map((job) => (
@@ -293,8 +293,8 @@ export default function Home() {
           </h2>
           <div data-reveal="" style={stagger(1)} className="mt-10 grid gap-10 lg:mt-14 lg:grid-cols-12 lg:items-end">
             <p className="max-w-xl text-lg leading-relaxed text-text sm:text-xl lg:col-span-6">
-              I&apos;m looking for full-stack roles in Lebanon, the Gulf, or remote with EU companies. Email is the
-              fastest way to reach me.
+              I&apos;m available now for full-stack roles, remote worldwide or with relocation. Email is the fastest way
+              to reach me.
             </p>
             <div className="lg:col-span-6 lg:text-right">
               <a
@@ -342,7 +342,7 @@ function Hero() {
         <div className="grid lg:grid-cols-12">
           <div className="lg:col-span-10">
             <p className="enter text-sm font-medium text-muted sm:text-base" style={delay(0)}>
-              Founding full-stack developer at{" "}
+              Most recently lead developer of{" "}
               <a
                 href="https://esthejob.fr"
                 target="_blank"
@@ -423,7 +423,7 @@ function Hero() {
             >
               esthejob.fr
             </a>
-            : the marketplace I took from prototype to production as lead developer.{" "}
+            : the marketplace I took from prototype to launch as its sole developer.{" "}
             <Link href="/work/esthejob" className="link-underline font-semibold text-ink">
               Read the case study
             </Link>
