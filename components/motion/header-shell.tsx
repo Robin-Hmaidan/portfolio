@@ -32,11 +32,17 @@ export function HeaderShell({ children }: { children: ReactNode }) {
       .map((id) => document.querySelector<HTMLElement>(`section[aria-labelledby="${id}"]`))
       .filter((s): s is HTMLElement => s !== null);
 
+    // Track which sections cross the reading line, so the underline clears again
+    // above the first section (hero) instead of sticking to the last one seen.
+    const inView = new Set<Element>();
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) setActive(entry.target.getAttribute("aria-labelledby"));
+          if (entry.isIntersecting) inView.add(entry.target);
+          else inView.delete(entry.target);
         }
+        const current = sections.findLast((s) => inView.has(s));
+        setActive(current ? current.getAttribute("aria-labelledby") : null);
       },
       { rootMargin: "-45% 0px -50% 0px" },
     );
