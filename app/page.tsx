@@ -351,10 +351,10 @@ function Hero() {
               >
                 esthéJob
               </a>
-              <span aria-hidden="true" className="mx-2 text-slate-300">
+              <span aria-hidden="true" className="mx-2 hidden text-slate-300 sm:inline">
                 /
               </span>
-              <span className="whitespace-nowrap">{site.location}</span>
+              <span className="block whitespace-nowrap sm:inline">{site.location}</span>
             </p>
 
             <h1 id="hero-title" className="text-display mt-6 font-extrabold text-ink sm:mt-8">
